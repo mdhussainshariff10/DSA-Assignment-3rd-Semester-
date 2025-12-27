@@ -1,0 +1,67 @@
+
+Code 
+#include <stdio.h> 
+#include <stdlib.h> 
+struct node { int data;
+struct node *left;
+struct node *right; }; 
+struct node *queue[50];
+int front = 0, rear = 0; 
+void enqueue(struct node *n)
+{ queue[rear++] = n; } 
+struct node* dequeue() 
+{ 
+return queue[front++]; 
+} 
+int main()
+{
+struct node *root, *temp, *newnode; int n, i, x; 
+printf("Enter number of nodes: "); 
+scanf("%d", &n); 
+ 
+if (n == 0) 
+    return 0; 
+ 
+printf("Enter root value: "); 
+scanf("%d", &x); 
+ 
+root = (struct node*)malloc(sizeof(struct node)); 
+root->data = x; 
+root->left = root->right = NULL; 
+ 
+enqueue(root); 
+ 
+for (i = 1; i < n; i++) 
+{ 
+    temp = queue[front]; 
+ 
+    printf("Enter value %d: ", i + 1); 
+    scanf("%d", &x); 
+ 
+    newnode = (struct node*)malloc(sizeof(struct node)); 
+    newnode->data = x; 
+    newnode->left = newnode->right = NULL; 
+ 
+    if (temp->left == NULL) 
+        temp->left = newnode; 
+    else 
+    { 
+        temp->right = newnode; 
+        front++; 
+    } 
+ 
+    enqueue(newnode); 
+} 
+ 
+printf("\nLevel Order Traversal: "); 
+ 
+front = 0; 
+while (front < rear) 
+{ 
+    temp = dequeue(); 
+    printf("%d ", temp->data); 
+} 
+ 
+return 0; 
+  
+}
