@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n, i;
+    int *m, *c;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    m = (int *)malloc(n * sizeof(int));
+    c = (int *)calloc(n, sizeof(int));
+
+    printf("\nValues in malloc (junk values):\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", m[i]);
+
+    printf("\n\nValues in calloc (initialized to zero):\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", c[i]);
+
+    free(m);
+    free(c);
+
+    return 0;
+}
