@@ -1,0 +1,73 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+#define MAX 10 
+ 
+struct node 
+{ 
+    int vertex; 
+    struct node *next; 
+}; 
+ 
+struct node *adj[MAX]; 
+int visited[MAX]; 
+int n; 
+ 
+void addEdge(int src, int dest) 
+{ 
+    struct node *newNode = (struct node *)malloc(sizeof(struct node)); 
+    newNode->vertex = dest; 
+    newNode->next = adj[src]; 
+    adj[src] = newNode; 
+} 
+ 
+void dfs(int v) 
+{ 
+    struct node *temp; 
+ 
+    visited[v] = 1; 
+    printf("%d ", v); 
+ 
+    temp = adj[v]; 
+    while (temp != NULL) 
+    { 
+        if (visited[temp->vertex] == 0) 
+            dfs(temp->vertex); 
+ 
+        temp = temp->next; 
+    } 
+} 
+ 
+int main() 
+{ 
+    int i, edges, src, dest, start; 
+ 
+    printf("Enter number of nodes: "); 
+    scanf("%d", &n); 
+ 
+    for (i = 1; i <= n; i++) 
+    { 
+        adj[i] = NULL; 
+        visited[i] = 0; 
+    } 
+ 
+    printf("Enter number of edges: "); 
+    scanf("%d", &edges); 
+ 
+    for (i = 0; i < edges; i++) 
+    { 
+        scanf("%d %d", &src, &dest); 
+        addEdge(src, dest); 
+        addEdge(dest, src); 
+    } 
+ 
+    printf("Enter starting node: "); 
+    scanf("%d", &start); 
+ 
+    printf("DFS traversal: "); 
+    dfs(start); 
+    system("getmac"); 
+ 
+ 
+    return 0; 
+} 
