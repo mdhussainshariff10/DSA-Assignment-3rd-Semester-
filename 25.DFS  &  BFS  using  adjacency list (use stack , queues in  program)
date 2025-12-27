@@ -1,0 +1,74 @@
+* DFS using Stack
+
+
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+struct node 
+{ 
+    int data; 
+    struct node *next; 
+}; 
+ 
+struct node *adj[10]; 
+int stack[10], top = -1, visited[10], n; 
+ 
+void dfs(int start) 
+{ 
+    struct node *p; 
+    stack[++top] = start; 
+ 
+    while (top != -1) 
+    { 
+        start = stack[top--]; 
+ 
+        if (!visited[start]) 
+        { 
+            printf("%d ", start); 
+            visited[start] = 1; 
+        } 
+ 
+        p = adj[start]; 
+        while (p != NULL) 
+        { 
+            if (!visited[p->data]) 
+                stack[++top] = p->data; 
+            p = p->next; 
+        } 
+    } 
+} 
+ 
+int main() 
+{ 
+    int i, e, u, v, start; 
+ 
+    printf("Enter number of nodes: "); 
+    scanf("%d", &n); 
+ 
+    for (i = 1; i <= n; i++) 
+    { 
+        adj[i] = NULL; 
+        visited[i] = 0; 
+    } 
+ 
+    printf("Enter number of edges: "); 
+    scanf("%d", &e); 
+ 
+    for (i = 0; i < e; i++) 
+    { 
+        scanf("%d %d", &u, &v); 
+ 
+        struct node *t = malloc(sizeof(struct node)); 
+        t->data = v; 
+        t->next = adj[u]; 
+        adj[u] = t; 
+    } 
+ 
+    printf("Enter starting node: "); 
+    scanf("%d", &start); 
+ 
+    printf("DFS: "); 
+    dfs(start); 
+    system("getmac"); 
+    return 0; 
+}
